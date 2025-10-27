@@ -1,13 +1,12 @@
 # 🎂 Birthday Website
 
-A beautiful, interactive birthday website built with React and Vite! Upload and display photos without any backend - everything is stored locally in your browser.
+A beautiful, interactive birthday website built with React and Vite! Add your photos directly in the source code and display them in a stunning gallery.
 
 ## ✨ Features
 
 - 🎉 Beautiful animated birthday theme
-- 📸 Upload photos directly from your device
+- 📸 Add photos from your source code
 - 🖼️ Stunning photo gallery with lightbox view
-- 💾 Photos saved locally in browser storage
 - 🎈 Animated decorations and effects
 - 📱 Fully responsive design
 - 🌐 Ready to deploy on GitHub Pages
@@ -76,20 +75,22 @@ Your site will be available at: `https://[username].github.io/Aja/`
 
 Edit `index.html` to change the title that appears in the browser tab.
 
-### Uploading Photos
+### Adding Photos
 
-Click the "Add a Photo" button to upload images. Photos are automatically saved to your browser's local storage and will persist between sessions.
+1. Place your image files in the `public/photos/` folder
+2. Edit `src/config/photos.js` and add the photo paths to the array
+3. See `HOW_TO_ADD_PHOTOS.md` for detailed instructions
 
-### Deleting Photos
+### Removing Photos
 
-Hover over any photo in the gallery and click the 🗑️ button to delete it.
+Simply remove the photo path from the array in `src/config/photos.js`
 
 ## 📝 Notes
 
-- Photos are stored in the browser's localStorage as base64 data
-- Each photo can be up to several megabytes (browser dependent)
-- Photos are specific to the browser where they were uploaded
-- To share photos across devices, download and upload them on each device
+- Photos are stored in the `public/photos/` directory
+- Recommended image formats: JPG, PNG
+- Optimize image sizes for better performance
+- All photos are included in the build and deployed with your site
 
 ## 🛠️ Technologies Used
 

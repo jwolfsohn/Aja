@@ -1,16 +1,15 @@
 import './PhotoGallery.css'
 import { useState } from 'react'
 
-function PhotoGallery({ photos, onDeletePhoto }) {
+function PhotoGallery({ photos }) {
   const [selectedPhoto, setSelectedPhoto] = useState(null)
-  const [hoveredIndex, setHoveredIndex] = useState(null)
 
   if (photos.length === 0) {
     return (
       <section className="photo-gallery">
         <div className="empty-gallery">
           <div className="empty-icon">🖼️</div>
-          <p className="empty-text">No photos yet! Add your first memory above.</p>
+          <p className="empty-text">No photos yet! Add photos to public/photos/ and configure them in src/config/photos.js</p>
         </div>
       </section>
     )
@@ -24,13 +23,6 @@ function PhotoGallery({ photos, onDeletePhoto }) {
     setSelectedPhoto(null)
   }
 
-  const handleDelete = (index, e) => {
-    e.stopPropagation()
-    if (window.confirm('Are you sure you want to delete this photo?')) {
-      onDeletePhoto(index)
-    }
-  }
-
   return (
     <>
       <section className="photo-gallery">
@@ -41,25 +33,18 @@ function PhotoGallery({ photos, onDeletePhoto }) {
               <div
                 key={photo.id || index}
                 className="photo-card"
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
                 onClick={() => openModal(photo)}
               >
                 <div className="photo-wrapper">
                   <img
-                    src={photo.data}
-                    alt={`Photo ${index + 1}`}
+                    src={photo.url}
+                    alt={photo.alt || `Photo ${index + 1}`}
                     className="photo-image"
+                    loading="lazy"
                   />
-                  <div className={`photo-overlay ${hoveredIndex === index ? 'active' : ''}`}>
+                  <div className="photo-overlay">
                     <div className="overlay-buttons">
-                      <button
-                        className="delete-button"
-                        onClick={(e) => handleDelete(index, e)}
-                        aria-label="Delete photo"
-                      >
-                        🗑️
-                      </button>
+                      <span className="view-button">👁️ Click to view</span>
                     </div>
                   </div>
                 </div>
@@ -74,8 +59,8 @@ function PhotoGallery({ photos, onDeletePhoto }) {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close" onClick={closeModal}>×</button>
             <img
-              src={selectedPhoto.data}
-              alt="Full size"
+              src={selectedPhoto.url}
+              alt={selectedPhoto.alt || "Full size"}
               className="modal-image"
             />
           </div>

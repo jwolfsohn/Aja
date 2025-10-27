@@ -1,0 +1,3 @@
+# Place your photo files (.jpg, .png, etc.) in this folder
+# Then add them to the photos array in src/config/photos.js
+

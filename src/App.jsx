@@ -1,42 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Header from './components/Header'
 import BirthdayGreeting from './components/BirthdayGreeting'
 import PhotoGallery from './components/PhotoGallery'
-import UploadButton from './components/UploadButton'
 import './App.css'
+import { photos as configuredPhotos } from './config/photos.js'
 
 function App() {
-  const [photos, setPhotos] = useState([])
-
-  // Load photos from localStorage on component mount
-  useEffect(() => {
-    const savedPhotos = localStorage.getItem('birthdayPhotos')
-    if (savedPhotos) {
-      try {
-        const parsedPhotos = JSON.parse(savedPhotos)
-        setPhotos(parsedPhotos)
-      } catch (error) {
-        console.error('Error loading photos from localStorage:', error)
-      }
-    }
-  }, [])
-
-  // Save photos to localStorage whenever photos change
-  useEffect(() => {
-    if (photos.length > 0) {
-      localStorage.setItem('birthdayPhotos', JSON.stringify(photos))
-    }
-  }, [photos])
-
-  const handleAddPhoto = (photoData) => {
-    setPhotos(prevPhotos => [...prevPhotos, photoData])
-  }
-
-  const handleDeletePhoto = (index) => {
-    const newPhotos = photos.filter((_, i) => i !== index)
-    setPhotos(newPhotos)
-    localStorage.setItem('birthdayPhotos', JSON.stringify(newPhotos))
-  }
+  // Load photos from source code configuration
+  const [photos] = useState(() => {
+    return configuredPhotos.map((photoUrl, index) => ({
+      id: index,
+      url: photoUrl,
+      alt: `Birthday Memory ${index + 1}`
+    }))
+  })
 
   return (
     <div className="app">
@@ -55,8 +32,7 @@ function App() {
       
       <Header />
       <BirthdayGreeting />
-      <UploadButton onAddPhoto={handleAddPhoto} />
-      <PhotoGallery photos={photos} onDeletePhoto={handleDeletePhoto} />
+      <PhotoGallery photos={photos} />
       
       <footer className="footer">
         <p>Made with 💜 for a special birthday</p>
